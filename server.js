@@ -1,17 +1,20 @@
 import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 
 import tabRouter from "./src/routers/tabRouter.js";
 
+// config .env file
+dotenv.config();
+// init app
 const app = express();
 
-const serverDbUrl =
-  "mongodb+srv://sumiBoi:sumi1234@cluster0.llcwi.mongodb.net/Learning?retryWrites=true&w=majority";
+const PORT = process.env.PORT || 3001;
 
 mongoose
-  .connect(serverDbUrl)
+  .connect(process.env.SERVER_DB_URL)
   .then(() => {
-    app.listen("3001", () =>
+    app.listen(PORT, () =>
       console.log("mongoDb conneected and server started at 3001")
     );
   })
