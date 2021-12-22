@@ -1,6 +1,8 @@
 import express from "express";
 import mongoose from "mongoose";
 
+import tabRouter from "./src/routers/tabRouter.js";
+
 const app = express();
 
 const serverDbUrl =
@@ -14,3 +16,18 @@ mongoose
     );
   })
   .catch(() => console.log("error in connecting to databse"));
+
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true, limit: "30mb" }));
+
+//routing middleware
+app.use("/tabs", tabRouter);
+
+app.get("*", (_, res) => {
+  res.redirect("/");
+});
+
+app.use((_, res) => {
+  res.status(404).send("404 page found");
+});

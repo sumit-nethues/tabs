@@ -1,14 +1,14 @@
 {
-   "1":{
-       "name":"Tab1",
-       "subtabs":["subTabs1","subTabs2","subTabs3"]
-   },
-   "2":{
-    "name":"Tab2",
-    "subtabs":["subTabs1","subTabs2","subTabs3"]
-},
-"3":{
-    "name":"Tab3",
-    "subtabs":["subTabs1","subTabs2","subTabs3"]
-}
+  "1": {
+    "name": "Tab1",
+    "subtabs": ["subTabs1", "subTabs2", "subTabs3"]
+  },
+  "2": {
+    "name": "Tab2",
+    "subtabs": ["subTabs1", "subTabs2", "subTabs3"]
+  },
+  "3": {
+    "name": "Tab3",
+    "subtabs": ["subTabs1", "subTabs2", "subTabs3"]
+  }
 }

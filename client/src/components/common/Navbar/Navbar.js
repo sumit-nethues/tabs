@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import tabData from "../../../data/tabData.json";
+import React, { useState, useEffect, useRef } from "react";
 import "../Navbar/Navbar.css";
 
-let tabsObject = {
+const tabsObject = {
   Tab1: false,
   Tab2: false,
   Tab3: false,
 };
 
-const Navbar = () => {
+const Navbar = ({ tabsData }) => {
+  const headerRef = useRef(null);
   const [showTabs, setShowTabs] = useState(tabsObject);
 
   const [showMenu, setShowMenuVisibility] = useState(false);
@@ -32,47 +32,53 @@ const Navbar = () => {
   };
 
   const handleClickOnWindow = () => {
-    let dropwdownMenuList = document.querySelectorAll(".sub-tabs-dropdown");
-    if (dropwdownMenuList.length > 0) {
-      dropwdownMenuList.forEach((element, i) => {
-        if (element.classList.contains("active")) {
-          const tabName = element.classList[1];
-          console.log("inside");
-          setShowTabs({ ...showTabs, [tabName]: false });
-        }
-      });
+    if (!!headerRef.current) {
+      let dropwdownMenuList =
+        headerRef.current.querySelectorAll(".sub-tabs-dropdown");
+      if (dropwdownMenuList.length > 0) {
+        dropwdownMenuList.forEach((element, i) => {
+          if (element.classList.contains("active")) {
+            const tabName = element.classList[1];
+            console.log("closed dropdown");
+            setShowTabs({ ...showTabs, [tabName]: false });
+          }
+        });
+      }
     }
   };
 
   return (
-    <header className="navbar-conatiner">
+    <header ref={headerRef} className="navbar-conatiner">
       <a className="header-logo" href="/">
         LOGO
       </a>
-      <ul className={`main-header-tabs ${showMenu ? "active" : ""}`}>
-        {Object.entries(tabData).map((data) => (
-          <li
-            key={data[0]}
-            className="tabs"
-            onClick={(e) => setTabsVisibility(e, data[1].name)}
-          >
-            {data[1].name}
-            <ul>
-              <li
-                className={`sub-tabs-dropdown ${data[1].name} ${
-                  showTabs[data[1].name] ? "active" : "hidden"
-                }`}
-              >
-                {data[1].subtabs.map((data, i) => (
-                  <a key={i} href="#">
-                    {data}
-                  </a>
-                ))}
-              </li>
-            </ul>
-          </li>
-        ))}
-      </ul>
+      {tabsData.length > 0 && (
+        <ul className={`main-header-tabs ${showMenu ? "active" : ""}`}>
+          {tabsData.map((data) => (
+            <li
+              key={data._id}
+              className="tabs"
+              onClick={(e) => setTabsVisibility(e, data.name)}
+            >
+              {data.name}
+              <ul>
+                <li
+                  className={`sub-tabs-dropdown ${data.name} ${
+                    showTabs[data.name] ? "active" : "hidden"
+                  }`}
+                >
+                  {data.subTabs.map((data, i) => (
+                    <a key={i} href="#">
+                      {data}
+                    </a>
+                  ))}
+                </li>
+              </ul>
+            </li>
+          ))}
+        </ul>
+      )}
+
       <div
         className="hamburger"
         onClick={() => setShowMenuVisibility((prev) => !prev)}
