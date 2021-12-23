@@ -15,7 +15,7 @@ mongoose
   .connect(process.env.SERVER_DB_URL)
   .then(() => {
     app.listen(PORT, () =>
-      console.log("mongoDb conneected and server started at 3001")
+      console.log("mongoDb conneected and server started at ", PORT)
     );
   })
   .catch(() => console.log("error in connecting to databse"));
